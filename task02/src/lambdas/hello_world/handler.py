@@ -15,28 +15,22 @@ class HelloWorld(AbstractLambda):
         """
         Explain incoming event here
         """
-        # print("=====>>>", event.get("httpMethod"), event.get("path"))
-        print("=====>>>", event)
-        # if event.get("httpMethod") == "GET" and event.get("path") == "/hello":
-        return {
-            "headers": {
-                "Content-Type": "application/json"
-            },
-            "body": json.dumps({
+        http_method = event.get('requestContext', {}).get('http', {}).get('method')
+        path = event.get('requestContext', {}).get('http', {}).get('path')
+
+        print(f"HTTP Method: {http_method}, Path: {path}")
+        print("=========>", event)
+        print("<<<=========>", context)
+        if http_method == 'GET' and path == "/hello":
+            return json.dumps({
                 "statusCode": 200,
                 "message": "Hello from Lambda"
             })
-        }
-        # else:
-        #     return {
-        #         "headers": {
-        #             "Content-Type": "application/json"
-        #         },
-        #         "body": json.dumps({
-        #             "statusCode": 400,
-        #             "message": "Bad request syntax or unsupported method"
-        #         })
-        #     }
+        else:
+            return json.dumps({
+                "statusCode": 400,
+                "message": "Bad request syntax or unsupported method"
+            })
 
 
 HANDLER = HelloWorld()
