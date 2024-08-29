@@ -1,3 +1,5 @@
+import json
+
 from commons.abstract_lambda import AbstractLambda
 from commons.log_helper import get_logger
 
@@ -13,11 +15,15 @@ class HelloWorld(AbstractLambda):
         """
         Explain incoming event here
         """
-        print("=====>>>", event.httpMethod, event.path)
+        print("=====>>>", event.get("httpMethod"), event.get("path"))
         return {
             "statusCode": 200,
-            "headers": "application/json",
-            "message": "Hello from Lambda"
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "body": json.dumps({
+                "message": "Hello from Lambda"
+            })
         }
 
 
