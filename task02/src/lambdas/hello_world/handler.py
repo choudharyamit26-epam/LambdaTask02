@@ -29,7 +29,7 @@ class HelloWorld(AbstractLambda):
         else:
             return json.dumps({
                 "statusCode": 400,
-                "message": "Bad request syntax or unsupported method"
+                "message": f"Bad request syntax or unsupported method. Request path: {path}. HTTP method: {http_method}"
             })
 
 
