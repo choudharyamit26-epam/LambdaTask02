@@ -13,8 +13,10 @@ class HelloWorld(AbstractLambda):
         """
         Explain incoming event here
         """
+        print("=====>>>", event.httpMethod, event.path)
         return {
             "statusCode": 200,
+            "headers": "application/json",
             "message": "Hello from Lambda"
         }
 
